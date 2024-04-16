@@ -1,6 +1,8 @@
 package com.ktu.couriers.controllers;
 
 import com.ktu.couriers.models.Credentials;
+import com.ktu.couriers.models.User;
+import com.ktu.couriers.security.CustomUserDetailsService;
 import com.ktu.couriers.security.TokenBlacklistService;
 import com.ktu.couriers.utils.JwtUtil;
 import jakarta.servlet.http.HttpServletRequest;
@@ -27,24 +29,38 @@ public class AuthorizationController {
     @Autowired
     private TokenBlacklistService tokenBlacklistService;
 
+    @Autowired
+    private CustomUserDetailsService userDetailsService;
+
     @GetMapping("/logout")
-    public ResponseEntity<?> logoutUser(HttpServletRequest request) {
+    public ResponseEntity<String> logoutUser(HttpServletRequest request) {
         String authorizationHeader = request.getHeader("Authorization");
         if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
             String token = authorizationHeader.substring(7);
             tokenBlacklistService.blacklistToken(token);
         }
-        return ResponseEntity.ok("You've been logged out successfully.");
+        return ResponseEntity.ok("You have been logged out successfully");
     }
 
-    @GetMapping("/login")
-    public ResponseEntity<?> createAuthenticationToken(@RequestBody Credentials credentials) {
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(credentials.getEmail(), credentials.getPassword())
-        );
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        final UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        final String jwt = jwtUtil.generateToken(userDetails.getUsername());
-        return ResponseEntity.ok(jwt);
+    @PostMapping("/login")
+    public ResponseEntity<User> createAuthenticationToken(@RequestBody Credentials credentials) {
+        try {
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(credentials.getEmail(), credentials.getPassword())
+            );
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+            final UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+            if (userDetails == null) {
+                return ResponseEntity.badRequest().build();
+            }
+            final String jwt = jwtUtil.generateToken(userDetails.getUsername());
+            User user = userDetailsService.loadLoggedInUser(userDetails.getUsername());
+
+            user.setToken(jwt);
+            user.setPassword(null);
+            return ResponseEntity.ok(user);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
     }
 }

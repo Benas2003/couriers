@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Date;
 
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
@@ -28,6 +29,17 @@ public class CustomUserDetailsService implements UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with username: " + username));
 
         return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), mapRoleToAuthorities(user.getRole()));
+    }
+
+    public User loadLoggedInUser(String username) {
+        User user = userService.list().stream()
+                .filter(u -> u.getEmail().equals(username))
+                .findFirst()
+                .orElseThrow(() -> new UsernameNotFoundException("User not found with username: " + username));
+
+        user.setLastLoginAt(new Date());
+        userService.update(user.getId(), user);
+        return user;
     }
 
     private Collection<? extends GrantedAuthority> mapRoleToAuthorities(UserRole role){
