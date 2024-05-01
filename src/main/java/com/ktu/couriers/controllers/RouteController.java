@@ -1,7 +1,6 @@
 package com.ktu.couriers.controllers;
 
 import com.ktu.couriers.models.Route;
-import com.ktu.couriers.models.RouteSearch;
 import com.ktu.couriers.services.RouteService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,11 +19,6 @@ public class RouteController {
     @GetMapping()
     public List<Route> getAllRoutes() {
         return this.routeService.list();
-    }
-
-    @GetMapping("/search")
-    public List<Route> getRoutesBySearch(@PathVariable RouteSearch routeSearch) {
-        return this.routeService.search(routeSearch);
     }
 
     @GetMapping("/{id}")

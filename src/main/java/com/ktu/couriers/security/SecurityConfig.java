@@ -41,12 +41,34 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/login").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/clients").hasAnyRole("ADMIN", "COURIER")
-                        .requestMatchers(HttpMethod.GET, "/api/clients/search").hasAnyRole("ADMIN", "COURIER")
-                        .requestMatchers(HttpMethod.GET, "/api/clients/**").hasAnyRole("ADMIN", "COURIER")
-                        .requestMatchers(HttpMethod.POST, "/api/clients").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.PUT, "/api/clients/**").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.DELETE, "/api/clients/**").hasRole("ADMIN")
+                        // users endopoints
+                        .requestMatchers(HttpMethod.GET, "/api/user").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/api/user/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/api/user").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/api/user/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/user/**").hasRole("ADMIN")
+
+                        // pickup points endpoints pickup-point
+                        .requestMatchers(HttpMethod.GET, "/api/pickup-point").hasAnyRole("ADMIN", "CLIENT")
+                        .requestMatchers(HttpMethod.GET, "/api/pickup-point/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/api/pickup-point").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/api/pickup-point/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/pickup-point/**").hasRole("ADMIN")
+
+                        // parcels endpoints parcel
+                        .requestMatchers(HttpMethod.GET, "/api/parcel").hasAnyRole("ADMIN", "CLIENT", "COURIER")
+                        .requestMatchers(HttpMethod.GET, "/api/parcel/**").hasAnyRole("ADMIN", "CLIENT", "COURIER")
+                        .requestMatchers(HttpMethod.POST, "/api/parcel").hasAnyRole("ADMIN", "CLIENT")
+                        .requestMatchers(HttpMethod.PUT, "/api/parcel/**").hasAnyRole("ADMIN", "CLIENT", "COURIER")
+                        .requestMatchers(HttpMethod.DELETE, "/api/parcel/**").hasRole("ADMIN")
+
+                        // routes endpoints route
+                        .requestMatchers(HttpMethod.GET, "/api/route").hasAnyRole("ADMIN", "COURIER")
+                        .requestMatchers(HttpMethod.GET, "/api/route/**").hasAnyRole("ADMIN", "COURIER")
+                        .requestMatchers(HttpMethod.POST, "/api/route").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/api/route/**").hasAnyRole("ADMIN", "COURIER")
+                        .requestMatchers(HttpMethod.DELETE, "/api/route/**").hasRole("ADMIN")
+
                         .anyRequest().authenticated())
                 .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class)
                 .logout(logout -> logout

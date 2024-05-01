@@ -1,7 +1,6 @@
 package com.ktu.couriers.services;
 
 import com.ktu.couriers.models.User;
-import com.ktu.couriers.models.UserSearch;
 import com.ktu.couriers.repositories.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -21,11 +20,6 @@ public class UsersService {
 
     public User get(Long id) {
         return this.usersRepository.findById(id).orElse(null);
-    }
-
-    public List<User> search(UserSearch search) {
-        // UNIMPLEMENTED
-        return null;
     }
 
     public User create(User user) {

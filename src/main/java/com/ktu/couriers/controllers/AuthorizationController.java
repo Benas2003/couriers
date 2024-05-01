@@ -6,6 +6,7 @@ import com.ktu.couriers.security.CustomUserDetailsService;
 import com.ktu.couriers.security.TokenBlacklistService;
 import com.ktu.couriers.utils.JwtUtil;
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api")
 @CrossOrigin(origins = "http://localhost:4200")
+@Slf4j
 public class AuthorizationController {
 
     @Autowired
@@ -45,6 +47,7 @@ public class AuthorizationController {
     @PostMapping("/login")
     public ResponseEntity<User> createAuthenticationToken(@RequestBody Credentials credentials) {
         try {
+            log.debug("Logging in user: {}, password: {}", credentials.getEmail(), credentials.getPassword());
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(credentials.getEmail(), credentials.getPassword())
             );

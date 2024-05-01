@@ -1,7 +1,6 @@
 package com.ktu.couriers.controllers;
 
 import com.ktu.couriers.models.PickupPoint;
-import com.ktu.couriers.models.PickupPointSearch;
 import com.ktu.couriers.services.PickupPointService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,11 +19,6 @@ public class PickupPointController {
     @GetMapping()
     public List<PickupPoint> getAllPickupPoints() {
         return this.pickupPointService.list();
-    }
-
-    @GetMapping("/search")
-    public List<PickupPoint> getPickupPointsBySearch(@PathVariable PickupPointSearch pickupPointSearch) {
-        return this.pickupPointService.search(pickupPointSearch);
     }
 
     @GetMapping("/{id}")

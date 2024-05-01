@@ -1,7 +1,6 @@
 package com.ktu.couriers.services;
 
 import com.ktu.couriers.models.Route;
-import com.ktu.couriers.models.RouteSearch;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,10 +15,6 @@ public class RouteService {
     }
 
     public Route get(Long id) {
-        return null;
-    }
-
-    public List<Route> search(RouteSearch search) {
         return null;
     }
 

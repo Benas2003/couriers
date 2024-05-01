@@ -1,12 +1,38 @@
 package com.ktu.couriers.models;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import jakarta.persistence.*;
+import lombok.*;
 
-@Data
+@Setter
+@Getter
+@Entity
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class PickupPoint {
-    String name;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+
+    private String name;
+    private String address;
+    @Enumerated(EnumType.STRING)
+    private PickupPointStatus status;
+
+    public PickupPoint(String name, String address, PickupPointStatus status) {
+        this.setName(name);
+        this.setAddress(address);
+        this.setStatus(status);
+    }
+
+    @Override
+    public String toString() {
+        return "PickupPoint{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", address='" + address + '\'' +
+                ", status=" + status +
+                '}';
+    }
+
 }

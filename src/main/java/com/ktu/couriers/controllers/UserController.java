@@ -1,7 +1,6 @@
 package com.ktu.couriers.controllers;
 
 import com.ktu.couriers.models.User;
-import com.ktu.couriers.models.UserSearch;
 import com.ktu.couriers.services.UsersService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,12 +21,6 @@ public class UserController {
     public List<User> getAllUsers() {
         log.info("Getting all users");
         return this.usersService.list();
-    }
-
-    @GetMapping("/search")
-    public List<User> getUsersBySearch(@PathVariable UserSearch userSearch) {
-        log.info("Searching users by: {}", userSearch);
-        return this.usersService.search(userSearch);
     }
 
     @GetMapping("/{id}")
