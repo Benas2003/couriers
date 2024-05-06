@@ -27,12 +27,12 @@ public class PickupPointController {
     }
 
     @PostMapping()
-    public PickupPoint createPickupPoint(@RequestBody(required = true) PickupPoint pickupPoint) {
+    public PickupPoint createPickupPoint(@RequestBody PickupPoint pickupPoint) {
         return this.pickupPointService.create(pickupPoint);
     }
 
     @PutMapping("/{id}")
-    public PickupPoint updatePickupPoint(@PathVariable Long id, @RequestBody(required = true) PickupPoint pickupPoint) {
+    public PickupPoint updatePickupPoint(@PathVariable Long id, @RequestBody PickupPoint pickupPoint) {
         return this.pickupPointService.update(id, pickupPoint);
     }
 

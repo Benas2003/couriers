@@ -27,12 +27,12 @@ public class RouteController {
     }
 
     @PostMapping()
-    public Route createRoute(@RequestBody(required = true) Route route) {
+    public Route createRoute(@RequestBody Route route) {
         return this.routeService.create(route);
     }
 
     @PutMapping("/{id}")
-    public Route updateRoute(@PathVariable Long id, @RequestBody(required = true) Route route) {
+    public Route updateRoute(@PathVariable Long id, @RequestBody Route route) {
         return this.routeService.update(id, route);
     }
 

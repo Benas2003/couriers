@@ -7,7 +7,7 @@ import java.util.Set;
 
 @Service
 public class TokenBlacklistService {
-    private Set<String> blacklistedTokens = new HashSet<>();
+    private final Set<String> blacklistedTokens = new HashSet<>();
 
     public void blacklistToken(String token) {
         blacklistedTokens.add(token);

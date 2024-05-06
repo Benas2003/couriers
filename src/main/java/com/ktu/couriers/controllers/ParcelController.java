@@ -28,12 +28,12 @@ public class ParcelController {
     }
 
     @PostMapping()
-    public Parcel createParcel(@RequestBody(required = true) Parcel parcel) {
+    public Parcel createParcel(@RequestBody Parcel parcel) {
         return this.parcelService.create(parcel);
     }
 
     @PutMapping("/{id}")
-    public Parcel updateParcel(@PathVariable Long id, @RequestBody(required = true) Parcel parcel) {
+    public Parcel updateParcel(@PathVariable Long id, @RequestBody Parcel parcel) {
         return this.parcelService.update(id, parcel);
     }
 

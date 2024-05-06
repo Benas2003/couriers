@@ -30,13 +30,13 @@ public class UserController {
     }
 
     @PostMapping()
-    public User createUser(@RequestBody(required = true) User user) {
+    public User createUser(@RequestBody User user) {
         log.info("Creating user: {}", user);
         return this.usersService.create(user);
     }
 
     @PutMapping("/{id}")
-    public User updateUser(@PathVariable Long id, @RequestBody(required = true) User user) {
+    public User updateUser(@PathVariable Long id, @RequestBody User user) {
         log.info("Updating user: {}", user);
         return this.usersService.update(id, user);
     }

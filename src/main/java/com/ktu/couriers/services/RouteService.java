@@ -27,5 +27,6 @@ public class RouteService {
     }
 
     public void delete(Long id) {
+        throw new UnsupportedOperationException();
     }
 }
