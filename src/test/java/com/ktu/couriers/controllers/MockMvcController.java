@@ -1,6 +1,7 @@
 package com.ktu.couriers.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ktu.couriers.utils.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletResponse;
@@ -18,13 +19,17 @@ public class MockMvcController<T> {
 
     private String baseUrl = "/api";
 
-    public MockMvcController(MockMvc mockMvc) {
+    private final String token;
+
+    public MockMvcController(MockMvc mockMvc, JwtUtil jwtUtil) {
         this.mockMvc = mockMvc;
         this.objectMapper = new ObjectMapper();
+        token = jwtUtil.generateToken("kubiliusb9@gmail.com");
     }
 
     public MockHttpServletResponse post(String url, T object) throws Exception {
         return mockMvc.perform(MockMvcRequestBuilders.post(constructUrl(url))
+                        .header("Authorization", "Bearer " + token)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(object)))
                 .andExpect(status().isOk())
@@ -33,7 +38,8 @@ public class MockMvcController<T> {
     }
 
     public MockHttpServletResponse get(String url) throws Exception {
-        return mockMvc.perform(MockMvcRequestBuilders.get(constructUrl(url)))
+        return mockMvc.perform(MockMvcRequestBuilders.get(constructUrl(url))
+                .header("Authorization", "Bearer " + token))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andReturn().getResponse();
@@ -41,6 +47,7 @@ public class MockMvcController<T> {
 
     public MockHttpServletResponse put(String url, T object) throws Exception {
         return mockMvc.perform(MockMvcRequestBuilders.put(constructUrl(url))
+                        .header("Authorization", "Bearer " + token)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(object)))
                 .andExpect(status().isOk())
@@ -49,7 +56,8 @@ public class MockMvcController<T> {
     }
 
     public void delete(String url) throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.delete(constructUrl(url)))
+        mockMvc.perform(MockMvcRequestBuilders.delete(constructUrl(url))
+                .header("Authorization", "Bearer " + token))
                 .andExpect(status().isOk());
     }
 

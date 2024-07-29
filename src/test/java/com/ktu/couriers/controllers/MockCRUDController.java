@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.ktu.couriers.utils.JwtUtil;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
@@ -17,9 +18,9 @@ public class MockCRUDController<T>{
     private final Class<T> responseType;
 
 
-    public MockCRUDController(Class<T> responseType, MockMvc mockMvc) {
+    public MockCRUDController(Class<T> responseType, MockMvc mockMvc, JwtUtil jwlUtil) {
         this.responseType = responseType;
-        this.mockMvc = new MockMvcController<>(mockMvc);
+        this.mockMvc = new MockMvcController<>(mockMvc, jwlUtil);
     }
 
     public T post(String url, T object) throws Exception {
