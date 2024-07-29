@@ -1,14 +1,38 @@
 package com.ktu.couriers.models;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.ktu.couriers.enums.PickupPointStatus;
+import com.ktu.couriers.enums.RouteStatus;
+import jakarta.persistence.*;
+import lombok.*;
 
 import java.util.List;
 
-@Data
+@Getter
+@Setter
+@Entity
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class Route {
-    List<RouteWaypoint> waypoints;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private Long courierId;
+
+    @Enumerated(EnumType.STRING)
+    private RouteStatus status;
+
+    @Transient
+    private List<RouteWaypoint> waypoints;
+
+    @Override
+    public String toString() {
+        return "Route{" +
+                "id=" + id +
+                ", courierId=" + courierId +
+                ", status=" + status +
+                ", waypoints=" + waypoints +
+                '}';
+    }
 }

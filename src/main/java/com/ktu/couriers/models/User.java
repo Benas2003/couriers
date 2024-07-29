@@ -1,6 +1,7 @@
 package com.ktu.couriers.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.ktu.couriers.enums.ClientType;
+import com.ktu.couriers.enums.UserRole;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -39,7 +40,6 @@ public class User {
     @Transient
     private String token;
 
-    // constructor
     public User(String firstName, String lastName, String companyName, String email, String password, String phoneNumber, Date createdAt, Date lastLoginAt, UserRole role, String address, ClientType type, String companyRegistrationCode, String companyVAT) {
         this.firstName = firstName;
         this.lastName = lastName;

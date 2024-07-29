@@ -1,5 +1,6 @@
 package com.ktu.couriers.models;
 
+import com.ktu.couriers.enums.PickupPointStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -12,7 +13,7 @@ import lombok.*;
 public class PickupPoint {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     private String name;
     private String address;

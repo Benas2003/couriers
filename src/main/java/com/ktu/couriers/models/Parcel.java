@@ -1,5 +1,6 @@
 package com.ktu.couriers.models;
 
+import com.ktu.couriers.enums.ParcelStatus;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -17,7 +18,7 @@ import lombok.*;
 public class Parcel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     private String pickupAddress;
     private Long pickupPointId;

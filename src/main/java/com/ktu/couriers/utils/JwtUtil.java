@@ -12,6 +12,8 @@ import java.util.Date;
 @Component
 public class JwtUtil {
 
+    // if not void return type, then return null
+
     @Value("${jwt.secret}")
     private String secretKey;
 
@@ -23,6 +25,7 @@ public class JwtUtil {
                 .signWith(SignatureAlgorithm.HS256, secretKey)
                 .compact();
     }
+
 
     public Claims extractAllClaims(String token) {
         return Jwts.parser()

@@ -1,4 +1,4 @@
-package com.ktu.couriers.models;
+package com.ktu.couriers.enums;
 
 public enum ClientType {
     INDIVIDUAL,

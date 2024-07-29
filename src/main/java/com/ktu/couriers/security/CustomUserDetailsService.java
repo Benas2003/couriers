@@ -1,7 +1,7 @@
 package com.ktu.couriers.security;
 
 import com.ktu.couriers.models.User;
-import com.ktu.couriers.models.UserRole;
+import com.ktu.couriers.enums.UserRole;
 import com.ktu.couriers.services.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;

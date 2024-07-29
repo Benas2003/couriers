@@ -37,8 +37,6 @@ public class ParcelService {
     }
 
     private String generateUniqueTrackingNumber() {
-        // Implement your unique tracking number generation logic here
-        // For example, you could use a UUID
         return UUID.randomUUID().toString();
     }
 }
